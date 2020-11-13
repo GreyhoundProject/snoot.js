@@ -14,6 +14,20 @@ function css(element, properties)
     return true;
 }
 
+function att(element, attributes)
+{
+    if (element === 'object' && element !== null)
+        return false;
+
+    if (attributes === 'object' && attributes !== null)
+        return false;
+
+    for (const a in attributes)
+    {
+        element.setAttribute(a, attributes[a]);
+    }
+    return true;
+}
 
 function clamp(value, min, max)
 {
@@ -21,7 +35,6 @@ function clamp(value, min, max)
     if (value > max) return max;
     return value;
 }
-
 
 function interpolate(value, min, max)
 {
@@ -43,7 +56,7 @@ function quadInterp(value, min, max)
     return powInterp(value, mim, max, 2);
 }
 
-function powInterp(value, min, max, exp)
+function expInterp(value, min, max, exp)
 {
     let v = clamp(value, min, max);
     let mx = max-min;
@@ -53,12 +66,12 @@ function powInterp(value, min, max, exp)
 
 function quadInterp(value, min, max)
 {
-    return powInterp(value, min, max, 2);
+    return expInterp(value, min, max, 2);
 }
 
 function sqrtInterp(value, min, max)
 {
-    return powInterp(value, min, max, 0.5);
+    return expInterp(value, min, max, 0.5);
 }
 
 
@@ -72,17 +85,22 @@ function sqrtInterp(value, min, max)
 let y=0;
 let svg = document.getElementById('svgc');
 
+css(svg, {'borderWidth': '2px', 'borderColor': 'black', 'borderStyle':'solid'});
+
 for (let c=0; c<=20; c++)
 {
     let ny = (200 - (200*sqrtInterp(c, 0, 20)));
     if (c != 0)
     {
         var newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
-        newLine.setAttribute('x1', (c-1)*10);
-        newLine.setAttribute('y1', y);
-        newLine.setAttribute('x2', c*10);
-        newLine.setAttribute('y2', ny);
-        newLine.setAttribute("stroke", "black");
+
+        att(newLine, {
+            'x1': (c-1)*10,
+            'y1': y,
+            'x2': c*10,
+            'y2': ny,
+            "stroke": "black",
+        });
         svg.appendChild(newLine);
     }
 
