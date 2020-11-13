@@ -23,19 +23,45 @@ function clamp(value, min, max)
 }
 
 
-function interpolate(value, min, max, op)
+function interpolate(value, min, max)
 {
     let t = (max-min)/100;
     return t*value;
 }
 
-function sinterp(value, min, max, option)
+function sinterp(value, min, max)
 {
-    let hpi = Math.PI/2;
     let v = clamp(value, min, max);
-    let t = (Math.sin(((v*(max-min)/100)/2*hpi)-(hpi))+1)/2;
-    return clamp(t, -hpi, hpi);
+    let mx = max-min;
+    let hpi = Math.PI/2;
+    let t = Math.sin( ( ((v-min)/mx) *Math.PI)-hpi );
+    return (t/2)+0.5;
 }
+
+function quadInterp(value, min, max)
+{
+    return powInterp(value, mim, max, 2);
+}
+
+function powInterp(value, min, max, exp)
+{
+    let v = clamp(value, min, max);
+    let mx = max-min;
+    let t = Math.pow((v-min)/mx, exp>0? exp:1);
+    return t;
+}
+
+function quadInterp(value, min, max)
+{
+    return powInterp(value, min, max, 2);
+}
+
+function sqrtInterp(value, min, max)
+{
+    return powInterp(value, min, max, 0.5);
+}
+
+
 
 
 
@@ -48,7 +74,7 @@ let svg = document.getElementById('svgc');
 
 for (let c=0; c<=20; c++)
 {
-    let ny = (200 - (200*sinterp(c, 0, 20)));
+    let ny = (200 - (200*sqrtInterp(c, 0, 20)));
     if (c != 0)
     {
         var newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
