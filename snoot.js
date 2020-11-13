@@ -36,13 +36,13 @@ function clamp(value, min, max)
     return value;
 }
 
-function interpolate(value, min, max)
+function linInterp(value, min, max)
 {
     let t = (max-min)/100;
     return t*value;
 }
 
-function sinterp(value, min, max)
+function sinInterp(value, min, max)
 {
     let v = clamp(value, min, max);
     let mx = max-min;
