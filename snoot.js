@@ -6,10 +6,10 @@
  */
 function css(element, properties)
 {
-    if (typeof element === 'object' && element !== null)
+    if (typeof element !== 'object' && element !== null)
         return false;
 
-    if (typeof properties === 'object' && properties !== null)
+    if (typeof properties !== 'object' && properties !== null)
         return false;
 
     for (const p in properties)
@@ -29,10 +29,10 @@ function css(element, properties)
  */
 function att(element, attributes)
 {
-    if (typeof element === 'object' && element !== null)
+    if (typeof element !== 'object' && element !== null)
         return false;
 
-    if (typeof attributes === 'object' && attributes !== null)
+    if (typeof attributes !== 'object' && attributes !== null)
         return false;
 
     for (const a in attributes)
@@ -118,8 +118,6 @@ class Tween
         let T = clamp(t, 0, 1);
         return (this.dR * Math.pow(T, E)) + this.min;
     }
-
-
 }
 
 
@@ -136,15 +134,8 @@ let svg = document.getElementById('svgc');
 css(svg, {'borderWidth': '2px', 'borderColor': 'black', 'borderStyle':'solid'});
 
 var linLine = document.createElementNS('http://www.w3.org/2000/svg','line');
-        att(linLine, {
-            'x1': 0,
-            'y1': 1,
-            'x2': 1,
-            'y2': 0,
-            'stroke': '#CCCCCC',
-            'stroke-width':'0.005'
-        });
-        svg.appendChild(linLine);
+att(linLine,{'x1':0,'y1':1,'x2':1,'y2':0,'stroke':'#CCCCCC','stroke-width':'0.005'});
+svg.appendChild(linLine);
 
 
 let t = new Tween();
@@ -170,3 +161,5 @@ for (let c=0; c<=100; c++)
 
     y = ny;
 }
+
+console.log(Math);
